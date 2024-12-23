@@ -6,6 +6,15 @@ import { entropyToMnemonic } from 'bip39';
 import { randomBytes } from 'crypto';
 
 export async function run(provider: NetworkProvider) {
+
+    // read the mnemonic from the environment variable
+    const mnemonic = process.env.MY_MNEMONIC;
+    if (!mnemonic) {
+        throw new Error('MY_MNEMONIC environment variable is not set');
+    }
+
+    const keypair = await mnemonicToWalletKey(mnemonic.split(' '));
+
     // init the wallet
     const main = provider.open(Main.createFromConfig({
         seqno: 0,         

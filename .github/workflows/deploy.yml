@@ -23,5 +23,9 @@ jobs:
         run: npm install
 
       - name: Run tests
+        # Add a MY_MNEMONIC github secret using environment variable
+        env:
+          MY_MNEMONIC: ${{ secrets.MY_MNEMONIC }}
+        
         working-directory: ./ton/customized-wallet  
         run: npx blueprint test
